@@ -1,0 +1,84 @@
+{
+  "blog": {
+    "platform": "note",
+    "language": "ja",
+    "target_audience": "ガジェット好きの20〜40代",
+    "monthly_revenue_target_jpy": 3000
+  },
+  "article": {
+    "min_chars": 3000,
+    "max_chars": 5000,
+    "title_max_chars": 28,
+    "affiliate_links_per_article": { "min": 3, "max": 5 }
+  },
+  "affiliate": {
+    "programs": [
+      {
+        "name": "Amazonアソシエイト",
+        "commission_rate_min": 0.02,
+        "commission_rate_max": 0.08,
+        "placeholder": "[AFFILIATE: {product_name} | Amazon]"
+      },
+      {
+        "name": "楽天アフィリエイト",
+        "commission_rate_min": 0.01,
+        "commission_rate_max": 0.03,
+        "placeholder": "[AFFILIATE: {product_name} | 楽天]"
+      }
+    ],
+    "disclosure_text": "※本記事にはアフィリエイトリンクが含まれます。リンク経由でご購入いただくと、筆者に少額の報酬が入ります（読者様の購入金額は変わりません）。"
+  },
+  "categories": [
+    {
+      "name": "ワイヤレスイヤホン・ヘッドフォン",
+      "slug": "earphone-headphone",
+      "priority": 1,
+      "avg_price_jpy": 8000,
+      "keywords": ["ワイヤレスイヤホン", "ノイズキャンセリング", "ANC", "完全ワイヤレス", "TWS"]
+    },
+    {
+      "name": "スマートウォッチ・フィットネストラッカー",
+      "slug": "smartwatch",
+      "priority": 2,
+      "avg_price_jpy": 15000,
+      "keywords": ["スマートウォッチ", "フィットネストラッカー", "健康管理", "Apple Watch", "Garmin"]
+    },
+    {
+      "name": "モバイルバッテリー・充電器",
+      "slug": "charger-battery",
+      "priority": 3,
+      "avg_price_jpy": 3000,
+      "keywords": ["モバイルバッテリー", "急速充電", "GaN充電器", "MagSafe", "ワイヤレス充電"]
+    },
+    {
+      "name": "PCアクセサリー",
+      "slug": "pc-accessories",
+      "priority": 4,
+      "avg_price_jpy": 5000,
+      "keywords": ["メカニカルキーボード", "ゲーミングマウス", "トラックパッド", "USBハブ", "モニター"]
+    },
+    {
+      "name": "スマートホーム",
+      "slug": "smart-home",
+      "priority": 5,
+      "avg_price_jpy": 5000,
+      "keywords": ["スマートスピーカー", "スマート電球", "Nature Remo", "SwitchBot", "Matter"]
+    },
+    {
+      "name": "カメラ・撮影機材",
+      "slug": "camera",
+      "priority": 6,
+      "avg_price_jpy": 20000,
+      "keywords": ["アクションカメラ", "GoPro", "DJI", "ジンバル", "三脚"]
+    }
+  ],
+  "seo": {
+    "title_patterns": [
+      "{product}レビュー｜{benefit}を正直に評価",
+      "{product}と{product2}を比較！どっちを買うべき？",
+      "{category}おすすめ{n}選【{year}年版】コスパで選ぶ",
+      "【{price}円以下】{category}のコスパ最強モデルを厳選"
+    ],
+    "meta_keywords_count": 5
+  }
+}

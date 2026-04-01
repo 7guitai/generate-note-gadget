@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# エディタ
+.vscode/
+.idea/
+*.swp
+
+# 一時ファイル
+*.tmp
+*.bak
+
+# 環境変数（アフィリエイトIDなど）
+.env
+.env.local
+config/secrets.json
