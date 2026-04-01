@@ -1,0 +1,66 @@
+{
+  "image_sources": {
+    "primary": "pexels",
+    "fallback": "unsplash",
+    "note": "Pexels/UnsplashはどちらもAPIキーが無料で取得可能。商用利用OK・クレジット不要。"
+  },
+  "api_keys": {
+    "note": "各APIキーは環境変数で管理。リポジトリにはコミットしないこと。",
+    "pexels": "PEXELS_API_KEY 環境変数 → https://www.pexels.com/api/",
+    "unsplash": "UNSPLASH_ACCESS_KEY 環境変数 → https://unsplash.com/developers"
+  },
+  "image_specs": {
+    "eyecatch": {
+      "usage": "アイキャッチ（Noteのサムネイル）",
+      "recommended_size": "1280x720 以上",
+      "orientation": "landscape",
+      "count": 1
+    },
+    "body": {
+      "usage": "本文中の挿入画像",
+      "recommended_size": "1280x960 以上",
+      "orientation": "landscape",
+      "count": 3
+    }
+  },
+  "category_keywords": {
+    "charger-battery": {
+      "en": ["USB charger", "GaN charger", "power adapter", "charging cable", "power bank"],
+      "style": "minimal white background tech product"
+    },
+    "earphone-headphone": {
+      "en": ["wireless earbuds", "headphones", "audio technology", "earphones"],
+      "style": "lifestyle music listening"
+    },
+    "smartwatch": {
+      "en": ["smartwatch", "fitness tracker", "wearable technology", "smart band"],
+      "style": "lifestyle wrist sport"
+    },
+    "pc-accessories": {
+      "en": ["mechanical keyboard", "computer desk setup", "mouse gadget", "workspace"],
+      "style": "desk setup minimal clean"
+    },
+    "smart-home": {
+      "en": ["smart home device", "smart speaker", "home automation", "interior technology"],
+      "style": "modern home interior"
+    },
+    "camera": {
+      "en": ["camera photography", "action camera", "gimbal", "camera equipment"],
+      "style": "outdoor adventure photography"
+    }
+  },
+  "license_info": {
+    "pexels": {
+      "name": "Pexels License",
+      "commercial_use": true,
+      "attribution_required": false,
+      "url": "https://www.pexels.com/license/"
+    },
+    "unsplash": {
+      "name": "Unsplash License",
+      "commercial_use": true,
+      "attribution_required": false,
+      "url": "https://unsplash.com/license"
+    }
+  }
+}

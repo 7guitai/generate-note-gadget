@@ -14,3 +14,11 @@
 .env
 .env.local
 config/secrets.json
+
+# ダウンロード済み画像（容量が大きいためgit管理外）
+assets/images/**/*.jpg
+assets/images/**/*.jpeg
+assets/images/**/*.png
+assets/images/**/*.webp
+# credits.jsonはコミット対象（画像URLとクレジット情報）
+!assets/images/**/credits.json

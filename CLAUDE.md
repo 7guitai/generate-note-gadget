@@ -8,16 +8,11 @@
 ## ワークフロー
 
 ```
-1. リサーチ      → 2. テーマ選定   → 3. 記事生成   → 4. レビュー・保存
-(research phase)    (topic phase)     (write phase)    (output phase)
+1. リサーチ      → 2. テーマ選定   → 3. 記事生成   → 4. 画像取得     → 5. Note投稿
+(research phase)    (topic phase)     (write phase)    (image phase)      (publish)
 ```
 
 ### 実行方法
-
-**フルワークフロー（推奨）:**
-```
-bash scripts/run_workflow.sh
-```
 
 **ステップ別実行:**
 ```bash
@@ -29,6 +24,13 @@ bash scripts/run_workflow.sh topic
 
 # Step 3: 記事生成（テーマを引数で渡す）
 bash scripts/run_workflow.sh article "【テーマ名】"
+
+# Step 4: アイキャッチ・本文画像の取得（Pexels APIキーが必要）
+export PEXELS_API_KEY="your_key_here"
+bash scripts/fetch_images.sh articles/YYYY-MM-DD_xxx_note.md
+
+# Step 5: 画像挿入ポイントの確認
+bash scripts/insert_images.sh articles/YYYY-MM-DD_xxx_note.md
 ```
 
 ---
