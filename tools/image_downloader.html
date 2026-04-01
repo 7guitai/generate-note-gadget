@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記事アイキャッチ画像取得ツール</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 1.4rem; margin-bottom: 4px; }
+  .subtitle { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  .card h2 { font-size: 1rem; margin-bottom: 12px; color: #444; }
+  label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #555; }
+  input, select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95rem; }
+  input:focus, select:focus { outline: none; border-color: #0066cc; }
+  .row { display: flex; gap: 12px; }
+  .row > * { flex: 1; }
+  button { padding: 10px 20px; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
+  .btn-primary { background: #0066cc; color: #fff; width: 100%; margin-top: 12px; }
+  .btn-primary:hover { background: #0055aa; }
+  .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .photo-card { border-radius: 10px; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: .2s; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+  .photo-card:hover { border-color: #0066cc; transform: translateY(-2px); }
+  .photo-card.selected { border-color: #0066cc; }
+  .photo-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+  .photo-meta { padding: 10px; font-size: 0.8rem; color: #666; }
+  .photo-meta strong { color: #333; }
+  .badge { display: inline-block; background: #e8f0fe; color: #0066cc; border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; margin-top: 4px; }
+  .actions { display: flex; gap: 8px; padding: 8px 10px; border-top: 1px solid #eee; }
+  .actions button { flex: 1; padding: 7px; font-size: 0.82rem; border-radius: 6px; }
+  .btn-dl { background: #0066cc; color: #fff; }
+  .btn-dl:hover { background: #0055aa; }
+  .btn-open { background: #f0f0f0; color: #333; }
+  .btn-open:hover { background: #e0e0e0; }
+  #status { padding: 12px; border-radius: 8px; font-size: 0.9rem; margin-top: 12px; display: none; }
+  .status-info { background: #e8f4ff; color: #0066cc; }
+  .status-error { background: #fff0f0; color: #cc0000; }
+  .status-success { background: #f0fff4; color: #007700; }
+  .credits { margin-top: 16px; padding: 16px; background: #fffbea; border-radius: 8px; border: 1px solid #fde68a; font-size: 0.82rem; display: none; }
+  .credits h3 { font-size: 0.9rem; margin-bottom: 8px; }
+  .credits-item { margin-bottom: 6px; padding: 6px; background: #fff; border-radius: 4px; }
+  textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.82rem; font-family: monospace; resize: vertical; margin-top: 8px; }
+  .selected-count { font-size: 0.85rem; color: #0066cc; margin-top: 8px; font-weight: 600; }
+  .checkmark { position: absolute; top: 8px; right: 8px; background: #0066cc; color: white; border-radius: 50%; width: 24px; height: 24px; display: none; align-items: center; justify-content: center; font-size: 14px; }
+  .photo-card.selected .checkmark { display: flex; }
+  .photo-wrap { position: relative; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>記事アイキャッチ画像取得ツール</h1>
+  <p class="subtitle">Pexels APIを使って無料・商用OKの画像を検索・ダウンロード</p>
+
+  <div class="card">
+    <h2>⚙️ 設定</h2>
+    <label>Pexels APIキー</label>
+    <input type="password" id="apiKey" placeholder="BkGaN..." autocomplete="off">
+
+    <div class="row" style="margin-top:12px">
+      <div>
+        <label>検索キーワード（英語推奨）</label>
+        <input type="text" id="query" value="GaN charger USB gadget technology" placeholder="GaN charger USB gadget">
+      </div>
+      <div>
+        <label>枚数</label>
+        <select id="count">
+          <option value="6" selected>6枚</option>
+          <option value="9">9枚</option>
+          <option value="12">12枚</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:12px">
+      <div>
+        <label>向き</label>
+        <select id="orientation">
+          <option value="landscape" selected>横長（アイキャッチ向き）</option>
+          <option value="portrait">縦長</option>
+          <option value="">指定なし</option>
+        </select>
+      </div>
+      <div>
+        <label>サイズ</label>
+        <select id="size">
+          <option value="large" selected>Large（推奨）</option>
+          <option value="medium">Medium</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="search()">🔍 検索する</button>
+    <div id="status"></div>
+  </div>
+
+  <div id="results" style="display:none">
+    <div class="card">
+      <h2>🖼️ 検索結果</h2>
+      <div id="selected-count" class="selected-count"></div>
+      <div class="grid" id="photo-grid"></div>
+      <button class="btn-primary" id="dl-all" onclick="downloadSelected()" style="margin-top:16px" disabled>
+        選択した画像をすべてダウンロード
+      </button>
+    </div>
+  </div>
+
+  <div class="credits" id="credits-section">
+    <h3>📋 クレジット情報（credits.json に保存する内容）</h3>
+    <div id="credits-list"></div>
+    <label style="margin-top:12px">コピー用テキスト</label>
+    <textarea id="credits-json" rows="8" readonly></textarea>
+  </div>
+</div>
+
+<script>
+const selected = new Map(); // id → photo data
+
+function setStatus(msg, type='info') {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = `status-${type}`;
+  el.style.display = 'block';
+}
+
+async function search() {
+  const key = document.getElementById('apiKey').value.trim();
+  const query = document.getElementById('query').value.trim();
+  const count = document.getElementById('count').value;
+  const orientation = document.getElementById('orientation').value;
+  const size = document.getElementById('size').value;
+
+  if (!key) { setStatus('APIキーを入力してください', 'error'); return; }
+  if (!query) { setStatus('キーワードを入力してください', 'error'); return; }
+
+  setStatus('検索中...', 'info');
+  document.querySelector('.btn-primary').disabled = true;
+
+  const params = new URLSearchParams({ query, per_page: count, size });
+  if (orientation) params.set('orientation', orientation);
+
+  try {
+    const res = await fetch(`https://api.pexels.com/v1/search?${params}`, {
+      headers: { Authorization: key }
+    });
+    if (!res.ok) throw new Error(`API Error: ${res.status} ${res.statusText}`);
+    const data = await res.json();
+    renderPhotos(data.photos, data.total_results);
+    setStatus(`${data.total_results.toLocaleString()}件中 ${data.photos.length}件を表示`, 'success');
+  } catch(e) {
+    setStatus(`エラー: ${e.message}`, 'error');
+  }
+  document.querySelector('.btn-primary').disabled = false;
+}
+
+function renderPhotos(photos, total) {
+  const grid = document.getElementById('photo-grid');
+  grid.innerHTML = '';
+  selected.clear();
+  updateSelectedCount();
+
+  photos.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.dataset.id = p.id;
+    card.innerHTML = `
+      <div class="photo-wrap">
+        <img src="${p.src.medium}" alt="${p.alt || 'photo'}" loading="lazy">
+        <div class="checkmark">✓</div>
+      </div>
+      <div class="photo-meta">
+        <strong>${p.photographer}</strong><br>
+        <span class="badge">Pexels License • 商用OK</span>
+      </div>
+      <div class="actions">
+        <button class="btn-dl" onclick="downloadOne(event, ${p.id})">⬇ ダウンロード</button>
+        <button class="btn-open" onclick="window.open('${p.url}','_blank')">Pexelsで見る</button>
+      </div>
+    `;
+    card.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') return;
+      toggleSelect(card, p);
+    });
+    card.dataset.photo = JSON.stringify(p);
+    grid.appendChild(card);
+  });
+
+  document.getElementById('results').style.display = 'block';
+}
+
+function toggleSelect(card, photo) {
+  if (selected.has(photo.id)) {
+    selected.delete(photo.id);
+    card.classList.remove('selected');
+  } else {
+    selected.set(photo.id, photo);
+    card.classList.add('selected');
+  }
+  updateSelectedCount();
+  updateCredits();
+}
+
+function updateSelectedCount() {
+  const el = document.getElementById('selected-count');
+  const btn = document.getElementById('dl-all');
+  if (selected.size === 0) {
+    el.textContent = '画像をクリックして選択（複数可）';
+    btn.disabled = true;
+    btn.textContent = '選択した画像をすべてダウンロード';
+  } else {
+    el.textContent = `${selected.size}枚 選択中`;
+    btn.disabled = false;
+    btn.textContent = `⬇ 選択した ${selected.size}枚 をダウンロード`;
+  }
+}
+
+async function downloadOne(e, id) {
+  e.stopPropagation();
+  const card = document.querySelector(`[data-id="${id}"]`);
+  const photo = JSON.parse(card.dataset.photo);
+  await downloadPhoto(photo);
+}
+
+async function downloadPhoto(photo) {
+  const url = photo.src.large2x || photo.src.large;
+  const filename = `pexels_${photo.id}_${photo.photographer.replace(/\s+/g,'_')}.jpg`;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.target = '_blank';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+async function downloadSelected() {
+  if (selected.size === 0) return;
+  for (const photo of selected.values()) {
+    await downloadPhoto(photo);
+    await new Promise(r => setTimeout(r, 600)); // ブラウザ規制対策
+  }
+  setStatus(`${selected.size}枚のダウンロードを開始しました`, 'success');
+}
+
+function updateCredits() {
+  const section = document.getElementById('credits-section');
+  const list = document.getElementById('credits-list');
+  const textarea = document.getElementById('credits-json');
+
+  if (selected.size === 0) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+
+  const credits = [...selected.values()].map((p, i) => ({
+    file: `pexels_${p.id}_${p.photographer.replace(/\s+/g,'_')}.jpg`,
+    pexels_id: String(p.id),
+    photographer: p.photographer,
+    photographer_url: p.photographer_url,
+    pexels_url: p.url,
+    alt: p.alt || '',
+    usage: i === 0 ? 'note_eyecatch' : 'note_body',
+    license: 'Pexels License (free for commercial use)'
+  }));
+
+  list.innerHTML = credits.map(c => `
+    <div class="credits-item">
+      📸 <strong>${c.photographer}</strong> — ${c.usage === 'note_eyecatch' ? '🏷 アイキャッチ候補' : '📄 本文用'}<br>
+      <a href="${c.pexels_url}" target="_blank" style="font-size:0.78rem;color:#0066cc">${c.pexels_url}</a>
+    </div>
+  `).join('');
+
+  textarea.value = JSON.stringify(credits, null, 2);
+}
+
+// Enterキーで検索
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.activeElement.id !== 'credits-json') search();
+});
+
+// APIキーを入力済みの場合は自動設定
+window.onload = () => {
+  const saved = sessionStorage.getItem('pexels_key');
+  if (saved) document.getElementById('apiKey').value = saved;
+  document.getElementById('apiKey').addEventListener('change', e => {
+    sessionStorage.setItem('pexels_key', e.target.value);
+  });
+};
+</script>
+</body>
+</html>
