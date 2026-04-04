@@ -2,7 +2,7 @@
   "blog": {
     "platform": "note",
     "language": "ja",
-    "target_audience": "ガジェット好きの20〜40代",
+    "target_audience": "大学生・専門学校生（18〜24歳）",
     "monthly_revenue_target_jpy": 3000
   },
   "article": {
@@ -33,51 +33,57 @@
       "name": "ワイヤレスイヤホン・ヘッドフォン",
       "slug": "earphone-headphone",
       "priority": 1,
-      "avg_price_jpy": 8000,
-      "keywords": ["ワイヤレスイヤホン", "ノイズキャンセリング", "ANC", "完全ワイヤレス", "TWS"]
+      "avg_price_jpy": 5000,
+      "student_use_case": "授業・通学・自習・オンライン講義",
+      "keywords": ["ワイヤレスイヤホン 学生", "イヤホン コスパ", "ノイズキャンセリング 安い", "オンライン授業 イヤホン"]
     },
     {
-      "name": "スマートウォッチ・フィットネストラッカー",
-      "slug": "smartwatch",
+      "name": "タブレット・iPad関連アクセサリー",
+      "slug": "tablet-accessories",
       "priority": 2,
-      "avg_price_jpy": 15000,
-      "keywords": ["スマートウォッチ", "フィットネストラッカー", "健康管理", "Apple Watch", "Garmin"]
+      "avg_price_jpy": 8000,
+      "student_use_case": "ノートテイキング・PDF教科書閲覧・レポート作成",
+      "keywords": ["iPad 学生", "タブレット 大学生", "Apple Pencil 代替", "iPad ケース おすすめ"]
     },
     {
       "name": "モバイルバッテリー・充電器",
       "slug": "charger-battery",
       "priority": 3,
       "avg_price_jpy": 3000,
-      "keywords": ["モバイルバッテリー", "急速充電", "GaN充電器", "MagSafe", "ワイヤレス充電"]
+      "student_use_case": "通学・キャンパス・図書館での充電",
+      "keywords": ["モバイルバッテリー 学生", "充電器 コスパ", "GaN充電器 安い", "大学生 充電器"]
     },
     {
-      "name": "PCアクセサリー",
+      "name": "PCアクセサリー・周辺機器",
       "slug": "pc-accessories",
       "priority": 4,
       "avg_price_jpy": 5000,
-      "keywords": ["メカニカルキーボード", "ゲーミングマウス", "トラックパッド", "USBハブ", "モニター"]
+      "student_use_case": "レポート作成・オンライン授業・プログラミング",
+      "keywords": ["大学生 キーボード", "学生 マウス おすすめ", "USBハブ 大学", "PCスタンド 安い"]
     },
     {
-      "name": "スマートホーム",
-      "slug": "smart-home",
+      "name": "デスク周り・収納グッズ",
+      "slug": "desk-organization",
       "priority": 5,
-      "avg_price_jpy": 5000,
-      "keywords": ["スマートスピーカー", "スマート電球", "Nature Remo", "SwitchBot", "Matter"]
+      "avg_price_jpy": 3000,
+      "student_use_case": "一人暮らし・寮生活・狭い部屋の整理",
+      "keywords": ["一人暮らし デスク", "学生 部屋 収納", "デスク整理 おすすめ", "大学生 部屋づくり"]
     },
     {
-      "name": "カメラ・撮影機材",
-      "slug": "camera",
+      "name": "文房具・学習ツール",
+      "slug": "stationery-study",
       "priority": 6,
-      "avg_price_jpy": 20000,
-      "keywords": ["アクションカメラ", "GoPro", "DJI", "ジンバル", "三脚"]
+      "avg_price_jpy": 2000,
+      "student_use_case": "講義ノート・試験勉強・資格取得",
+      "keywords": ["大学生 文房具", "勉強 便利グッズ", "ノート おすすめ 大学", "学習効率 グッズ"]
     }
   ],
   "seo": {
     "title_patterns": [
-      "{product}レビュー｜{benefit}を正直に評価",
-      "{product}と{product2}を比較！どっちを買うべき？",
-      "{category}おすすめ{n}選【{year}年版】コスパで選ぶ",
-      "【{price}円以下】{category}のコスパ最強モデルを厳選"
+      "【学生向け】{product}レビュー｜{benefit}を正直評価",
+      "【大学生比較】{product}と{product2}どっちがいい？",
+      "【{year}年】学生におすすめ{category}{n}選",
+      "【{price}円以下】学生向け{category}のコスパ最強モデル"
     ],
     "meta_keywords_count": 5
   }
